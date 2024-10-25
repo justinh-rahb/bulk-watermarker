@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bulk Image Watermarker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Bulk Image Watermarker</h1>
+    <div id="upload-area" class="upload-area">
+        <p>Drag & Drop Images Here</p>
+        <button id="select-button">Select Images</button>
+        <input type="file" id="file-input" multiple accept="image/png, image/jpeg" hidden>
+    </div>
+
+    <div class="watermark-settings">
+        <h2>Watermark Customization</h2>
+        <label for="watermark-text">Watermark Text:</label>
+        <input type="text" id="watermark-text" placeholder="Enter watermark text">
+
+        <label for="watermark-image">Or Upload Watermark Image:</label>
+        <input type="file" id="watermark-image" accept="image/png, image/jpeg">
+
+        <label for="position">Position:</label>
+        <select id="position">
+            <option value="top-left">Top Left</option>
+            <option value="top-right">Top Right</option>
+            <option value="center">Center</option>
+            <option value="bottom-left">Bottom Left</option>
+            <option value="bottom-right">Bottom Right</option>
+        </select>
+
+        <label for="margin-x">Horizontal Margin (px):</label>
+        <input type="number" id="margin-x" value="10">
+
+        <label for="margin-y">Vertical Margin (px):</label>
+        <input type="number" id="margin-y" value="10">
+
+        <label for="size">Font Size (px):</label>
+        <input type="number" id="size" value="36">
+
+        <label for="color">Color:</label>
+        <input type="color" id="color" value="#FFFFFF">
+
+        <label for="opacity">Opacity:</label>
+        <input type="range" id="opacity" min="0" max="1" step="0.1" value="0.5">
+    </div>
+
+    <div class="live-preview">
+        <h2>Live Preview (Click to Download)</h2>
+        <canvas id="preview-canvas"></canvas>
+    </div>
+
+    <div id="image-preview" class="image-preview">
+        <!-- Processed images will be displayed here with pagination -->
+    </div>
+
+    <div class="pagination">
+        <button id="prev-page">Previous</button>
+        <span id="page-info"></span>
+        <button id="next-page">Next</button>
+    </div>
+
+    <button id="download-zip">Download All as ZIP</button>
+</div>
+
+<!-- Include JSZip and FileSaver.js libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<!-- Include the main script -->
+<script src="script.js"></script>
+</body>
+</html>
