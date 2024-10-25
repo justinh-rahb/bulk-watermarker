@@ -26,6 +26,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const imagesPerPage = 8; // Adjusted to match Bootstrap grid
     let currentPreviewIndex = 0; // Index of the image currently in the live preview
 
+    // Debounce function
+    function debounce(func, delay) {
+        let timeoutId;
+        return function (...args) {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                func.apply(this, args);
+            }, delay);
+        };
+    }
+
     // Load settings from localStorage
     loadSettings();
 
@@ -34,13 +45,30 @@ document.addEventListener('DOMContentLoaded', () => {
         opacityValue.textContent = opacityInput.value;
     });
 
+    // Save settings and update live preview
+    function saveSettingsAndUpdatePreview() {
+        saveSettings();
+        updateLivePreview();
+    }
+
+    // Debounced reprocess images function
+    const debouncedReprocessImages = debounce(() => {
+        reprocessImages();
+    }, 300);
+
     // Save settings when they change and reprocess images
-    [watermarkText, positionSelect, fontSizeInput, colorInput, opacityInput, marginXInput, marginYInput].forEach(input => {
+    [watermarkText, positionSelect, fontSizeInput, opacityInput, marginXInput, marginYInput].forEach((input) => {
         input.addEventListener('input', () => {
             saveSettings();
             updateLivePreview();
             reprocessImages();
         });
+    });
+
+    // Apply debouncing to the color picker input
+    colorInput.addEventListener('input', () => {
+        saveSettingsAndUpdatePreview();
+        debouncedReprocessImages();
     });
 
     // Handle watermark image upload with localStorage
@@ -71,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fileInput.addEventListener('change', () => handleFiles(fileInput.files));
 
     // Handle drag and drop
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach((eventName) => {
         uploadArea.addEventListener(eventName, preventDefaults, false);
     });
     uploadArea.addEventListener('drop', handleDrop, false);
@@ -88,11 +116,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Handle drag events for styling
-    ['dragenter', 'dragover'].forEach(eventName => {
-        uploadArea.addEventListener(eventName, () => uploadArea.classList.add('over'), false);
+    ['dragenter', 'dragover'].forEach((eventName) => {
+        uploadArea.addEventListener(
+            eventName,
+            () => uploadArea.classList.add('over'),
+            false
+        );
     });
-    ['dragleave', 'drop'].forEach(eventName => {
-        uploadArea.addEventListener(eventName, () => uploadArea.classList.remove('over'), false);
+    ['dragleave', 'drop'].forEach((eventName) => {
+        uploadArea.addEventListener(
+            eventName,
+            () => uploadArea.classList.remove('over'),
+            false
+        );
     });
 
     // Handle files
@@ -174,8 +210,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let x, y;
         if (watermarkImg) {
-            const wmWidth = watermarkImg.width;
-            const wmHeight = watermarkImg.height;
+            // Calculate desired size for the watermark image based on font size
+            const aspectRatio = watermarkImg.width / watermarkImg.height;
+            let wmHeight = fontSize; // Set height based on font size
+            let wmWidth = wmHeight * aspectRatio; // Calculate width to maintain aspect ratio
+
+            // Ensure the maximum dimensions are at least 1
+            const maxWidth = Math.max(1, canvasWidth - 2 * marginX);
+            const maxHeight = Math.max(1, canvasHeight - 2 * marginY);
+
+            wmWidth = Math.min(wmWidth, maxWidth);
+            wmHeight = Math.min(wmHeight, maxHeight);
+
             ({ x, y } = calculatePosition(canvasWidth, canvasHeight, wmWidth, wmHeight, marginX, marginY));
             ctx.drawImage(watermarkImg, x - wmWidth / 2, y - wmHeight / 2, wmWidth, wmHeight);
         } else {
@@ -326,12 +372,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Apply watermark
                 applyWatermark(ctx, canvas.width, canvas.height);
 
-                canvas.toBlob(blob => {
+                canvas.toBlob((blob) => {
                     const newFilename = renameFile(image.filename);
                     zip.file(newFilename, blob);
                     processedCount++;
                     if (processedCount === imagesData.length) {
-                        zip.generateAsync({ type: 'blob' }).then(content => {
+                        zip.generateAsync({ type: 'blob' }).then((content) => {
                             saveAs(content, 'watermarked_images.zip');
                         });
                     }
@@ -394,7 +440,7 @@ document.addEventListener('DOMContentLoaded', () => {
             color: colorInput.value,
             opacity: opacityInput.value,
             marginX: marginXInput.value,
-            marginY: marginYInput.value
+            marginY: marginYInput.value,
         };
         localStorage.setItem('watermarkSettings', JSON.stringify(settings));
     }

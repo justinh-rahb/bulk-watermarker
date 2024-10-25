@@ -53,3 +53,63 @@ body {
     color: #6c757d;
     pointer-events: none;
 }
+/* Custom Styles */
+
+body {
+    background-color: #f8f9fa;
+}
+
+.navbar-brand i {
+    margin-right: 8px;
+}
+
+.navbar .nav-link {
+    color: #fff;
+}
+
+#upload-area {
+    cursor: pointer;
+    background-color: #e9ecef;
+}
+
+#upload-area.over {
+    background-color: #dee2e6;
+}
+
+#preview-canvas {
+    max-width: 100%;
+    cursor: pointer;
+}
+
+.image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+}
+
+.image-container .download-link {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+#opacity-value {
+    font-size: 14px;
+}
+
+.page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+}
+
