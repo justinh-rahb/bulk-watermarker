@@ -1,63 +1,30 @@
+/* Custom Styles */
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #f8f9fa;
 }
 
-.container {
-    width: 90%;
-    max-width: 1000px;
-    margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.navbar-brand i {
+    margin-right: 8px;
 }
 
-.upload-area {
-    border: 2px dashed #ccc;
-    padding: 30px;
-    text-align: center;
+#upload-area {
     cursor: pointer;
-    margin-bottom: 20px;
+    background-color: #e9ecef;
 }
 
-.upload-area.over {
-    border-color: #333;
+#upload-area.over {
+    background-color: #dee2e6;
 }
 
-.watermark-settings {
-    margin-bottom: 20px;
-}
-
-.watermark-settings label {
-    display: block;
-    margin-top: 10px;
-}
-
-.watermark-settings input,
-.watermark-settings select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-}
-
-.live-preview {
-    margin-bottom: 20px;
-}
-
-.live-preview canvas {
+#preview-canvas {
     max-width: 100%;
-    border: 1px solid #ccc;
     cursor: pointer;
-}
-
-.image-preview {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
 }
 
 .image-container {
     position: relative;
+    overflow: hidden;
 }
 
 .image-container img {
@@ -66,32 +33,23 @@ body {
     cursor: pointer;
 }
 
-.image-container a {
+.image-container .download-link {
     position: absolute;
     bottom: 5px;
     left: 5px;
     background: rgba(255, 255, 255, 0.7);
-    padding: 5px;
+    padding: 5px 10px;
     text-decoration: none;
     color: #000;
     font-size: 14px;
+    border-radius: 5px;
 }
 
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
+#opacity-value {
+    font-size: 14px;
 }
 
-.pagination button {
-    padding: 10px 20px;
-    margin: 0 10px;
-}
-
-#download-zip {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    font-size: 16px;
+.page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
 }

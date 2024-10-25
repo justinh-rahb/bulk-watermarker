@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fontSizeInput = document.getElementById('size');
     const colorInput = document.getElementById('color');
     const opacityInput = document.getElementById('opacity');
+    const opacityValue = document.getElementById('opacity-value');
     const marginXInput = document.getElementById('margin-x');
     const marginYInput = document.getElementById('margin-y');
 
@@ -22,11 +23,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let watermarkImg = null;
     let imagesData = [];
     let currentPage = 1;
-    const imagesPerPage = 8; // Adjusted to match 4x2 grid
+    const imagesPerPage = 8; // Adjusted to match Bootstrap grid
     let currentPreviewIndex = 0; // Index of the image currently in the live preview
 
     // Load settings from localStorage
     loadSettings();
+
+    // Update opacity value display
+    opacityInput.addEventListener('input', () => {
+        opacityValue.textContent = opacityInput.value;
+    });
 
     // Save settings when they change and reprocess images
     [watermarkText, positionSelect, fontSizeInput, colorInput, opacityInput, marginXInput, marginYInput].forEach(input => {
@@ -80,6 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const files = dt.files;
         handleFiles(files);
     }
+
+    // Handle drag events for styling
+    ['dragenter', 'dragover'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, () => uploadArea.classList.add('over'), false);
+    });
+    ['dragleave', 'drop'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, () => uploadArea.classList.remove('over'), false);
+    });
 
     // Handle files
     function handleFiles(files) {
@@ -234,6 +248,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const imagesToShow = imagesData.slice(start, end);
 
         imagesToShow.forEach((image, index) => {
+            const colDiv = document.createElement('div');
+            colDiv.className = 'col-md-3';
+
             const container = document.createElement('div');
             container.className = 'image-container';
 
@@ -249,10 +266,12 @@ document.addEventListener('DOMContentLoaded', () => {
             link.href = image.dataURL || image.originalDataURL;
             link.download = renameFile(image.filename);
             link.textContent = 'Download';
+            link.className = 'download-link';
 
             container.appendChild(img);
             container.appendChild(link);
-            imagePreview.appendChild(container);
+            colDiv.appendChild(container);
+            imagePreview.appendChild(colDiv);
         });
 
         pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
@@ -394,6 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fontSizeInput.value = settings.fontSize;
             colorInput.value = settings.color;
             opacityInput.value = settings.opacity;
+            opacityValue.textContent = settings.opacity;
             marginXInput.value = settings.marginX;
             marginYInput.value = settings.marginY;
         }
