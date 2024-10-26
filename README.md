@@ -1,6 +1,11 @@
-# Bulk Image Watermarker
-
-<h2 align="center"><a href="https://watermarker.oncornerstone.app">watermarker.oncornerstone.app</a></h2>
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<br/>
+<p align="center">
+<img src="https://raw.githubusercontent.com/justinh-rahb/bulk-watermarker/master/docs/watermarker_screenshot.png" alt="Screenshot" width="600px" />
+</p>
+<h2 align="center">
+<a href="https://watermarker.oncornerstone.app">Bulk Image Watermarker</a>
+</h2>
 
 This repository hosts a simple web-based application for adding watermarks to multiple images simultaneously. It supports both text and image watermarks and offers customization options such as position, font size, color, opacity, and margins. The application is built using Bootstrap and vanilla JavaScript.
 
