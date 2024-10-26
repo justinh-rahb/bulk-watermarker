@@ -32,7 +32,7 @@ This repository hosts a simple web-based application for adding watermarks to mu
 1. **Upload Images**:
    - Drag and drop images into the upload area.
 
-     ![Screenshot of Upload Area](docs/watermarker_screenshot.png)
+     ![Screenshot of Upload Area](docs/watermarker_upload.png)
 
    - Or click the "Select Images" button to browse and select images from your device.
 
