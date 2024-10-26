@@ -1,7 +1,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 <br/>
 <p align="center">
-<img src="https://raw.githubusercontent.com/justinh-rahb/bulk-watermarker/master/docs/watermarker_screenshot.png" alt="Screenshot" width="600px" />
+<img src="https://raw.githubusercontent.com/justinh-rahb/bulk-watermarker/master/docs/watermarker_screenshot.png" alt="Screenshot" width="750px" />
 </p>
 <h2 align="center">
 <a href="https://watermarker.oncornerstone.app">Bulk Watermarker</a>
