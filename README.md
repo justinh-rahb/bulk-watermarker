@@ -46,19 +46,19 @@ This repository hosts a simple web-based application for adding watermarks to mu
      - **Opacity**: Use the slider to adjust the transparency.
      - **Margins**: Specify horizontal and vertical margins for positioning.
 
-     ![Screenshot of Upload Area](docs/watermarker_customization.png)
+     ![Screenshot of Customization Area](docs/watermarker_customization.png)
 
 3. **Live Preview**:
    - The live preview canvas updates automatically as you adjust settings.
 
-     *[Insert Screenshot of Live Preview Here]*
+     ![Screenshot of Preview Area](docs/watermarker_preview.png)
 
    - Click on the live preview to download the current image with the applied watermark.
 
 4. **Processed Images**:
    - Scroll down to see all processed images with pagination.
 
-     *[Insert Screenshot of Processed Images and Pagination Here]*
+     ![Screenshot of Preview Area](docs/watermarker_processed.png)
 
    - Click on any thumbnail to update the live preview with that image.
    - Use the "Download" link on each image to save individual files.
