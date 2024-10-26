@@ -32,7 +32,7 @@ This repository hosts a simple web-based application for adding watermarks to mu
 1. **Upload Images**:
    - Drag and drop images into the upload area.
 
-     *[Insert Screenshot of Upload Area Here]*
+     ![Screenshot of Upload Area](docs/watermarker_screenshot.png)
 
    - Or click the "Select Images" button to browse and select images from your device.
 
@@ -46,7 +46,7 @@ This repository hosts a simple web-based application for adding watermarks to mu
      - **Opacity**: Use the slider to adjust the transparency.
      - **Margins**: Specify horizontal and vertical margins for positioning.
 
-     *[Insert Screenshot of Watermark Settings Here]*
+     ![Screenshot of Upload Area](docs/watermarker_customization.png)
 
 3. **Live Preview**:
    - The live preview canvas updates automatically as you adjust settings.
