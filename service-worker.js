@@ -11,6 +11,12 @@ const assetsToCache = [
   '/static/img/apple-touch-icon-152x152.png',
   '/static/img/apple-touch-icon-167x167.png',
   '/static/img/apple-touch-icon-180x180.png',
+  '/static/img/android-icon-48x48.png',
+  '/static/img/android-icon-72x72.png',
+  '/static/img/android-icon-96x96.png',
+  '/static/img/android-icon-144x144.png',
+  '/static/img/android-icon-192x192.png',
+  '/static/img/android-icon-512x512.png',
   'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css',
   'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js'
