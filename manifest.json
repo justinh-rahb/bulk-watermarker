@@ -4,6 +4,8 @@
     "start_url": ".",
     "display": "standalone",
     "background_color": "#ffffff",
+    "theme_color": "#212529",
+    "orientation": "portrait-primary",
     "description": "An app for watermarking images.",
     "icons": [
       {
@@ -66,7 +68,6 @@
         "sizes": "512x512",
         "type": "image/png"
       }
-    ],
-    "theme_color": "#000000"
+    ]
   }
   
