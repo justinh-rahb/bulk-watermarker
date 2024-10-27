@@ -4,6 +4,7 @@ const assetsToCache = [
   '/index.html',
   '/static/css/styles.css',
   '/static/js/bulk-watermarker.js',
+  '/static/img/preview.png',
   '/static/img/bulk-watermarker.svg',
   '/static/img/favicon-32x32.png',
   '/static/img/favicon-192x192.png',
