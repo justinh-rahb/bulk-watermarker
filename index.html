@@ -30,156 +30,154 @@
             integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" rel="stylesheet">
         <link href="static/css/styles.css" rel="stylesheet">
     </head>    
-<body>
+    <body>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+            <div class="container-fluid">
+                <!-- Brand -->
+                <a class="navbar-brand" href="#"><img src="static/img/bulk-watermarker.svg" alt="Brand Logo" width="24" class="mt-0 me-2 mb-1"> Bulk Watermarker</a>
+                <!-- GitHub link -->
+                <a class="nav-link ms-auto order-lg-3" href="https://github.com/justinh-rahb/bulk-watermarker" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i>
+                    <span class="d-none d-lg-inline"> GitHub</span>
+                </a>
+                <!-- Toggle button -->
+                <!--<button class="navbar-toggler order-lg-4" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>-->
+                <!-- Collapsing content (if any) -->
+                <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
+                    <!-- Add any additional navbar items here -->
+                </div>
+            </div>
+        </nav>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    <div class="container-fluid">
-        <!-- Brand -->
-        <a class="navbar-brand" href="#"><img src="static/img/bulk-watermarker.svg" alt="Brand Logo" width="24" class="mt-0 me-2 mb-1"> Bulk Watermarker</a>
-        <!-- GitHub link -->
-        <a class="nav-link ms-auto order-lg-3" href="https://github.com/justinh-rahb/bulk-watermarker" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-github"></i>
-            <span class="d-none d-lg-inline"> GitHub</span>
-        </a>
-        <!-- Toggle button -->
-        <!--<button class="navbar-toggler order-lg-4" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>-->
-        <!-- Collapsing content (if any) -->
-        <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
-            <!-- Add any additional navbar items here -->
-        </div>
-    </div>
-</nav>
+        <!-- Main Container -->
+        <div class="container mt-4">
 
-<!-- Main Container -->
-<div class="container mt-4">
+            <!-- Upload Area -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-upload"></i> Upload Images</h5>
+                </div>
+                <div class="card-body text-center">
+                    <div id="upload-area" class="p-4 border border-secondary rounded">
+                        <p>Drag & Drop Images Here</p>
+                        <button id="select-button" class="btn btn-primary"><i class="fas fa-folder-open"></i> Select Images</button>
+                        <input type="file" id="file-input" multiple accept="image/png, image/jpeg" hidden>
+                    </div>
+                </div>
+            </div>
 
-    <!-- Upload Area -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5 class="mb-0"><i class="fas fa-upload"></i> Upload Images</h5>
-        </div>
-        <div class="card-body text-center">
-            <div id="upload-area" class="p-4 border border-secondary rounded">
-                <p>Drag & Drop Images Here</p>
-                <button id="select-button" class="btn btn-primary"><i class="fas fa-folder-open"></i> Select Images</button>
-                <input type="file" id="file-input" multiple accept="image/png, image/jpeg" hidden>
+            <!-- Watermark Settings -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-cog"></i> Watermark Customization</h5>
+                </div>
+                <div class="card-body">
+                    <form id="watermark-form">
+                        <div class="mb-3">
+                            <label for="watermark-text" class="form-label"><i class="fas fa-text-height"></i> Watermark Text:</label>
+                            <input type="text" id="watermark-text" class="form-control" placeholder="Enter watermark text">
+                        </div>
+                        <div class="mb-3">
+                            <label for="watermark-image" class="form-label"><i class="fas fa-image"></i> Or Upload Watermark Image:</label>
+                            <input type="file" id="watermark-image" class="form-control" accept="image/png, image/jpeg">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="position" class="form-label"><i class="fas fa-arrows-alt"></i> Position:</label>
+                                <select id="position" class="form-select">
+                                    <option value="top-left">Top Left</option>
+                                    <option value="top-right">Top Right</option>
+                                    <option value="center">Center</option>
+                                    <option value="bottom-left">Bottom Left</option>
+                                    <option value="bottom-right">Bottom Right</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="margin-x" class="form-label"><i class="fas fa-arrows-alt-h"></i> Horizontal Margin (px):</label>
+                                <input type="number" id="margin-x" class="form-control" value="10">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="margin-y" class="form-label"><i class="fas fa-arrows-alt-v"></i> Vertical Margin (px):</label>
+                                <input type="number" id="margin-y" class="form-control" value="10">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="size" class="form-label"><i class="fas fa-font"></i> Watermark Height (px):</label>
+                                <input type="number" id="size" class="form-control" value="36">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="color" class="form-label"><i class="fas fa-palette"></i> Color:</label>
+                                <input type="color" id="color" class="form-control form-control-color" value="#FFFFFF">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="opacity" class="form-label"><i class="fas fa-adjust"></i> Opacity:</label>
+                                <input type="range" id="opacity" class="form-range" min="0" max="1" step="0.1" value="0.5">
+                                <div id="opacity-value" class="text-center">0.5</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Live Preview -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-eye"></i> Live Preview (Click to Download)</h5>
+                </div>
+                <div class="card-body text-center">
+                    <canvas id="preview-canvas" class="border border-secondary"></canvas>
+                </div>
+            </div>
+
+            <!-- Image Preview and Pagination -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-images"></i> Processed Images (Click to Preview)</h5>
+                </div>
+                <div class="card-body">
+                    <div id="image-preview" class="row gy-3">
+                        <!-- Processed images will be displayed here with pagination -->
+                    </div>
+                    <nav>
+                        <ul class="pagination justify-content-center mt-3">
+                            <li class="page-item">
+                                <button id="prev-page" class="page-link">Previous</button>
+                            </li>
+                            <li class="page-item disabled">
+                                <span id="page-info" class="page-link"></span>
+                            </li>
+                            <li class="page-item">
+                                <button id="next-page" class="page-link">Next</button>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="text-center mt-3">
+                        <button id="download-zip" class="btn btn-success"><i class="fas fa-file-archive"></i> Download All as ZIP</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Watermark Settings -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5 class="mb-0"><i class="fas fa-cog"></i> Watermark Customization</h5>
-        </div>
-        <div class="card-body">
-            <form id="watermark-form">
-                <div class="mb-3">
-                    <label for="watermark-text" class="form-label"><i class="fas fa-text-height"></i> Watermark Text:</label>
-                    <input type="text" id="watermark-text" class="form-control" placeholder="Enter watermark text">
-                </div>
-                <div class="mb-3">
-                    <label for="watermark-image" class="form-label"><i class="fas fa-image"></i> Or Upload Watermark Image:</label>
-                    <input type="file" id="watermark-image" class="form-control" accept="image/png, image/jpeg">
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="position" class="form-label"><i class="fas fa-arrows-alt"></i> Position:</label>
-                        <select id="position" class="form-select">
-                            <option value="top-left">Top Left</option>
-                            <option value="top-right">Top Right</option>
-                            <option value="center">Center</option>
-                            <option value="bottom-left">Bottom Left</option>
-                            <option value="bottom-right">Bottom Right</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="margin-x" class="form-label"><i class="fas fa-arrows-alt-h"></i> Horizontal Margin (px):</label>
-                        <input type="number" id="margin-x" class="form-control" value="10">
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="margin-y" class="form-label"><i class="fas fa-arrows-alt-v"></i> Vertical Margin (px):</label>
-                        <input type="number" id="margin-y" class="form-control" value="10">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label for="size" class="form-label"><i class="fas fa-font"></i> Watermark Height (px):</label>
-                        <input type="number" id="size" class="form-control" value="36">
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="color" class="form-label"><i class="fas fa-palette"></i> Color:</label>
-                        <input type="color" id="color" class="form-control form-control-color" value="#FFFFFF">
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="opacity" class="form-label"><i class="fas fa-adjust"></i> Opacity:</label>
-                        <input type="range" id="opacity" class="form-range" min="0" max="1" step="0.1" value="0.5">
-                        <div id="opacity-value" class="text-center">0.5</div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Live Preview -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5 class="mb-0"><i class="fas fa-eye"></i> Live Preview (Click to Download)</h5>
-        </div>
-        <div class="card-body text-center">
-            <canvas id="preview-canvas" class="border border-secondary"></canvas>
-        </div>
-    </div>
-
-    <!-- Image Preview and Pagination -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5 class="mb-0"><i class="fas fa-images"></i> Processed Images (Click to Preview)</h5>
-        </div>
-        <div class="card-body">
-            <div id="image-preview" class="row gy-3">
-                <!-- Processed images will be displayed here with pagination -->
-            </div>
-            <nav>
-                <ul class="pagination justify-content-center mt-3">
-                    <li class="page-item">
-                        <button id="prev-page" class="page-link">Previous</button>
-                    </li>
-                    <li class="page-item disabled">
-                        <span id="page-info" class="page-link"></span>
-                    </li>
-                    <li class="page-item">
-                        <button id="next-page" class="page-link">Next</button>
-                    </li>
-                </ul>
-            </nav>
-            <div class="text-center mt-3">
-                <button id="download-zip" class="btn btn-success"><i class="fas fa-file-archive"></i> Download All as ZIP</button>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<!-- Bootstrap JS and Dependencies -->
-<script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
-<!-- Include JSZip and FileSaver.js libraries -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-<!-- Main Script -->
-<script src="static/js/bulk-watermarker.js"></script>
-<!-- Register Service Worker -->
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-    .then(reg => console.log('Service worker registered!', reg))
-    .catch(err => console.log('Service worker registration failed:', err));
-}
-</script>
-</body>
+        <!-- Bootstrap JS and Dependencies -->
+        <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
+        <!-- Include JSZip and FileSaver.js libraries -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+        <!-- Main Script -->
+        <script src="static/js/bulk-watermarker.js"></script>
+        <!-- Register Service Worker -->
+        <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+            .then(reg => console.log('Service worker registered!', reg))
+            .catch(err => console.log('Service worker registration failed:', err));
+        }
+        </script>
+    </body>
 </html>
