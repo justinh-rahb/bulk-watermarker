@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (imagesData.length > 0) {
             sampleImage.src = imagesData[currentPreviewIndex].originalDataURL;
         } else {
-            sampleImage.src = 'https://via.placeholder.com/600x400?text=Live+Preview';
+            sampleImage.src = 'static/img/preview.png';
         }
     }
 
