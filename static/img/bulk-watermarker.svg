@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Rounded square frame -->
+  <rect 
+    x="5" 
+    y="5" 
+    width="90" 
+    height="90" 
+    rx="15" 
+    fill="none" 
+    stroke="white" 
+    stroke-width="4"
+  />
+  
+  <!-- Sun -->
+  <circle 
+    cx="25" 
+    cy="25" 
+    r="8" 
+    fill="white"
+  />
+  
+  <!-- Mountain with peaks -->
+  <path 
+    d="M20 65 L40 25 L55 45 L70 30 L80 65" 
+    fill="none" 
+    stroke="white" 
+    stroke-width="4" 
+    stroke-linejoin="round"
+  />
+  
+  <!-- Water waves -->
+  <path 
+    d="M20 70 Q35 65 50 70 Q65 75 80 70" 
+    fill="none" 
+    stroke="white" 
+    stroke-width="4"
+  />
+  <path 
+    d="M20 85 Q35 80 50 85 Q65 90 80 85" 
+    fill="none" 
+    stroke="white" 
+    stroke-width="4"
+  />
+</svg>
