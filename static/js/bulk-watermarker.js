@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // If there are no images, update pagination info and disable buttons
         if (imagesData.length === 0) {
-            pageInfo.textContent = `Page 0 of 0`;
+            pageInfo.textContent = `Page 1 of 1`;
             prevPageButton.disabled = true;
             nextPageButton.disabled = true;
             return;
@@ -473,5 +473,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         updateLivePreview();
+        displayImages();
     }
 });
