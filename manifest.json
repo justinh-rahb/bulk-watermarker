@@ -1,7 +1,7 @@
 {
     "name": "Bulk Watermarker",
     "short_name": "Watermarker",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#ffffff",

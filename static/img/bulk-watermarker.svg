@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <!-- Rounded square frame -->
+  <!-- Adjusted rounded square frame -->
   <rect 
-    x="5" 
-    y="5" 
-    width="90" 
-    height="90" 
+    x="7" 
+    y="7" 
+    width="86" 
+    height="86" 
     rx="15" 
-    fill="none" 
+    fill="black" 
     stroke="white" 
     stroke-width="4"
   />
