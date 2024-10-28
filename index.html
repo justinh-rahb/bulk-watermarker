@@ -5,7 +5,7 @@
         <title>Bulk Watermarker</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Favicon and Manifest -->
-        <link rel="manifest" href="manifest.json">
+        <link rel="manifest" href="manifest.json?v=202410290912">
         <link rel="icon" type="image/png" sizes="32x32" href="static/img/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="192x192" href="static/img/favicon-192x192.png">
     
@@ -28,14 +28,14 @@
             integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
         <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
             integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" rel="stylesheet">
-        <link href="static/css/styles.css" rel="stylesheet">
+        <link href="static/css/styles.css?v=202410290912" rel="stylesheet">
     </head>    
     <body>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
             <div class="container-fluid">
                 <!-- Brand -->
-                <a class="navbar-brand" href="#"><img src="static/img/bulk-watermarker.svg" alt="Brand Logo" width="24" class="mt-0 me-2 mb-1"> Bulk Watermarker</a>
+                <a class="navbar-brand" href="#"><img src="static/img/bulk-watermarker.svg" alt="Brand Logo" width="24" class="mt-0 me-1 mb-1 ms-2"></a>
                 <!-- GitHub link -->
                 <a class="nav-link ms-auto order-lg-3" href="https://github.com/justinh-rahb/bulk-watermarker" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-github"></i>
@@ -170,11 +170,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
         <!-- Main Script -->
-        <script src="static/js/bulk-watermarker.js?v=202410290857"></script>
+        <script src="static/js/bulk-watermarker.js?v=202410290912"></script>
         <!-- Register Service Worker -->
         <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js?v=202410290905')
+            navigator.serviceWorker.register('/service-worker.js?v=202410290912')
             .then(reg => console.log('Service worker registered!', reg))
             .catch(err => console.log('Service worker registration failed:', err));
         }

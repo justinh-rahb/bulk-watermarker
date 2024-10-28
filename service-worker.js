@@ -1,9 +1,9 @@
 const CACHE_NAME = 'bulk-watermarker-cache-v1';
 const assetsToCache = [
-  '/',
-  '/index.html',
-  '/static/css/styles.css',
-  '/static/js/bulk-watermarker.js?v=202410290857',
+  '/?v=202410290912',
+  '/index.html?v=202410290912',
+  '/static/css/styles.css?v=202410290912',
+  '/static/js/bulk-watermarker.js?v=202410290912',
   '/static/img/preview.png',
   '/static/img/bulk-watermarker.svg',
   '/static/img/favicon-32x32.png',
