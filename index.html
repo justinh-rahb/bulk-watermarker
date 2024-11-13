@@ -5,30 +5,32 @@
         <title>Bulk Watermarker</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Favicon and Manifest -->
-        <link rel="manifest" href="manifest.json?v=202411130113">
-        <link rel="icon" type="image/png" sizes="32x32" href="static/img/favicon-32x32.png?v=202411130113">
-        <link rel="icon" type="image/png" sizes="192x192" href="static/img/favicon-192x192.png?v=202411130113">
+        <link rel="manifest" href="manifest.json?v=202411130120">
+        <link rel="icon" type="image/png" sizes="32x32" href="static/img/favicon-32x32.png?v=202411130120">
+        <link rel="icon" type="image/png" sizes="192x192" href="static/img/favicon-192x192.png?v=202411130120">
     
         <!-- Apple Touch Icons -->
-        <link rel="apple-touch-icon" sizes="120x120" href="static/img/apple-touch-icon-120x120.png?v=202411130113">
-        <link rel="apple-touch-icon" sizes="152x152" href="static/img/apple-touch-icon-152x152.png?v=202411130113">
-        <link rel="apple-touch-icon" sizes="167x167" href="static/img/apple-touch-icon-167x167.png?v=202411130113">
-        <link rel="apple-touch-icon" sizes="180x180" href="static/img/apple-touch-icon-180x180.png?v=202411130113">
+        <link rel="apple-touch-icon" sizes="120x120" href="static/img/apple-touch-icon-120x120.png?v=202411130120">
+        <link rel="apple-touch-icon" sizes="152x152" href="static/img/apple-touch-icon-152x152.png?v=202411130120">
+        <link rel="apple-touch-icon" sizes="167x167" href="static/img/apple-touch-icon-167x167.png?v=202411130120">
+        <link rel="apple-touch-icon" sizes="180x180" href="static/img/apple-touch-icon-180x180.png?v=202411130120">
 
         <!-- Android Icons -->
-        <link rel="icon" type="image/png" sizes="48x48" href="static/img/android-icon-48x48.png?v=202411130113">
-        <link rel="icon" type="image/png" sizes="72x72" href="static/img/android-icon-72x72.png?v=202411130113">
-        <link rel="icon" type="image/png" sizes="96x96" href="static/img/android-icon-96x96.png?v=202411130113">
-        <link rel="icon" type="image/png" sizes="144x144" href="static/img/android-icon-144x144.png?v=202411130113">
-        <link rel="icon" type="image/png" sizes="192x192" href="static/img/android-icon-192x192.png?v=202411130113">
-        <link rel="icon" type="image/png" sizes="512x512" href="static/img/android-icon-512x512.png?v=202411130113">
+        <link rel="icon" type="image/png" sizes="48x48" href="static/img/android-icon-48x48.png?v=202411130120">
+        <link rel="icon" type="image/png" sizes="72x72" href="static/img/android-icon-72x72.png?v=202411130120">
+        <link rel="icon" type="image/png" sizes="96x96" href="static/img/android-icon-96x96.png?v=202411130120">
+        <link rel="icon" type="image/png" sizes="144x144" href="static/img/android-icon-144x144.png?v=202411130120">
+        <link rel="icon" type="image/png" sizes="192x192" href="static/img/android-icon-192x192.png?v=202411130120">
+        <link rel="icon" type="image/png" sizes="512x512" href="static/img/android-icon-512x512.png?v=202411130120">
 
         <!-- Tailwind CSS -->
         <script src="https://cdn.tailwindcss.com"></script>
 
-        <!-- Font and Custom Styles -->
+        <!-- Font -->
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-        <link href="static/css/styles.css?v=202411130113" rel="stylesheet">
+
+        <!-- Custom styles -->
+        <link href="static/css/styles.css?v=202411130120" rel="stylesheet">
     </head>
     <body class="bg-gray-100">
         <div class="max-w-7xl mx-auto p-4 main-content">
@@ -47,23 +49,17 @@
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 flex-1">
                 <!-- Live Preview Section -->
                 <div class="lg:col-span-3 bg-white rounded-lg shadow-sm p-4 preview-container">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-eye text-gray-600"></i>
-                            <h2 class="text-lg font-semibold">Live Preview</h2>
-                        </div>
-                        <button id="select-button" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Select Images</button>
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fas fa-eye text-gray-600"></i>
+                        <h2 class="text-lg font-semibold">Live Preview</h2>
                     </div>
                     <div id="upload-area" class="aspect-4-3 bg-gray-100 rounded-lg overflow-hidden cursor-pointer relative">
                         <canvas id="preview-canvas" class="absolute inset-0 w-full h-full"></canvas>
-                        <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-400" id="upload-placeholder">
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
                             <p>Drop images here or click to upload</p>
-                        </div>                        
-                        <input type="file" id="file-input" multiple accept="image/png, image/jpeg" class="hidden">
-                        <div id="preview-arrows" class="hidden absolute inset-0 flex justify-between items-center">
-                            <button id="prev-preview" class="text-white bg-black bg-opacity-50 p-2 rounded-full mx-2">‹</button>
-                            <button id="next-preview" class="text-white bg-black bg-opacity-50 p-2 rounded-full mx-2">›</button>
+                            <button id="select-button" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">Select Images</button>
                         </div>
+                        <input type="file" id="file-input" multiple accept="image/png, image/jpeg" class="hidden">
                     </div>
                 </div>
 
@@ -120,7 +116,7 @@
             </div>
 
             <!-- Processed Images -->
-            <div class="mt-4 bg-white rounded-lg shadow-sm p-4 fixed-bottom">
+            <div class="mt-4 bg-white rounded-lg shadow-sm p-4 sticky bottom-0">
                 <div class="flex items-center justify-between gap-2 mb-4">
                     <div class="flex items-center gap-2">
                         <i class="fas fa-images text-gray-600"></i>
@@ -130,26 +126,27 @@
                         <i class="fas fa-file-archive mr-2"></i>Download All
                     </button>
                 </div>
-                <div id="image-preview" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 h-48 overflow-hidden relative">
-                    <!-- Images will be dynamically inserted here -->
-                    <div id="preview-nav" class="absolute inset-y-0 flex justify-between w-full items-center">
-                        <button id="prev-thumbnail" class="bg-gray-300 text-gray-600 hover:bg-gray-400 p-2 rounded-full">‹</button>
-                        <button id="next-thumbnail" class="bg-gray-300 text-gray-600 hover:bg-gray-400 p-2 rounded-full">›</button>
-                    </div>
+                <div id="image-preview" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    <!-- Images will be inserted here -->
                 </div>
+                <nav class="mt-4 flex justify-center gap-2">
+                    <button id="prev-page" class="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">Previous</button>
+                    <span id="page-info" class="px-4 py-2 bg-gray-100 rounded-lg">Page 1 of 1</span>
+                    <button id="next-page" class="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">Next</button>
+                </nav>
             </div>
         </div>
 
-        <!-- Libraries and Main Script -->
+        <!-- Libraries -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
         <!-- Main Script -->
-        <script src="static/js/bulk-watermarker.js?v=202411130113"></script>
+        <script src="static/js/bulk-watermarker.js?v=202411130120"></script>
         <!-- Register Service Worker -->
         <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js?v=202411130113')
+            navigator.serviceWorker.register('/service-worker.js?v=202411130120')
             .then(reg => console.log('Service worker registered!', reg))
             .catch(err => console.log('Service worker registration failed:', err));
         }
