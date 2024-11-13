@@ -295,7 +295,34 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             imagePreview.appendChild(img);
         });
+        updatePaginationButtons();
     }
+
+    function updatePaginationButtons() {
+        const imagePreview = document.getElementById('image-preview');
+        const prevPageButton = document.getElementById('prev-page');
+        const nextPageButton = document.getElementById('next-page');
+    
+        // Show buttons only if content overflows
+        prevPageButton.style.display = imagePreview.scrollLeft > 0 ? 'inline-flex' : 'none';
+        nextPageButton.style.display = imagePreview.scrollWidth > imagePreview.clientWidth + imagePreview.scrollLeft ? 'inline-flex' : 'none';
+    }
+    
+    // Attach event listeners to pagination buttons for smooth scrolling
+    document.getElementById('prev-page').addEventListener('click', () => {
+        const imagePreview = document.getElementById('image-preview');
+        imagePreview.scrollBy({ left: -100, behavior: 'smooth' });
+        setTimeout(updatePaginationButtons, 300); // Delay to allow for smooth scroll
+    });
+    
+    document.getElementById('next-page').addEventListener('click', () => {
+        const imagePreview = document.getElementById('image-preview');
+        imagePreview.scrollBy({ left: 100, behavior: 'smooth' });
+        setTimeout(updatePaginationButtons, 300); // Delay to allow for smooth scroll
+    });
+    
+    // Call updatePaginationButtons on load and whenever images are updated
+    document.addEventListener('DOMContentLoaded', updatePaginationButtons);    
 
     // Rename file
     function renameFile(filename) {
