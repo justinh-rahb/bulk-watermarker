@@ -95,6 +95,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle files
     function handleFiles(files) {
+        // Hide the placeholder when images are uploaded
+        if (files.length > 0) {
+            uploadPlaceholder.style.display = 'none';
+        }
+
         [...files].forEach((file) => {
             if (file.type.match('image.*')) {
                 const reader = new FileReader();
@@ -110,6 +115,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Hide placeholder on file select or drop
+    selectButton.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleFiles(e.dataTransfer.files);
+    });
 
     // Update live preview
     function updateLivePreview() {
