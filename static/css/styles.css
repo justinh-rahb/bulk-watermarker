@@ -17,7 +17,12 @@ body {
     width: 100%;
     height: 100%;
 }
-/* Adjust height dynamically based on viewport */
+.fixed-bottom {
+    position: sticky;
+    bottom: 0;
+    max-height: 20vh;
+
+}
 .main-content {
     display: flex;
     flex-direction: column;
@@ -25,4 +30,13 @@ body {
 }
 .preview-container {
     flex: 1;
+}
+#preview-nav button,
+#preview-arrows button {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+#upload-area:hover #preview-arrows,
+#image-preview:hover #preview-nav {
+    opacity: 1;
 }
