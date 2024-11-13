@@ -53,10 +53,11 @@
                         <i class="fas fa-eye text-gray-600"></i>
                         <h2 class="text-lg font-semibold">Live Preview</h2>
                     </div>
-                    <div id="upload-area" class="aspect-4-3 bg-gray-100 rounded-lg overflow-hidden cursor-pointer">
-                        <canvas id="preview-canvas"></canvas>
-                        <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+                    <div id="upload-area" class="aspect-4-3 bg-gray-100 rounded-lg overflow-hidden cursor-pointer relative">
+                        <canvas id="preview-canvas" class="absolute inset-0 w-full h-full"></canvas>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
                             <p>Drop images here or click to upload</p>
+                            <button id="select-button" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">Select Images</button>
                         </div>
                         <input type="file" id="file-input" multiple accept="image/png, image/jpeg" class="hidden">
                     </div>
