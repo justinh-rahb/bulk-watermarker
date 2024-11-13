@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const uploadArea = document.getElementById('upload-area');
     const fileInput = document.getElementById('file-input');
     const selectButton = document.getElementById('select-button');
+    const previewCanvas = document.getElementById('preview-canvas');
     const imagePreview = document.getElementById('image-preview');
     const downloadZipButton = document.getElementById('download-zip');
 
@@ -15,27 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const marginXInput = document.getElementById('margin-x');
     const marginYInput = document.getElementById('margin-y');
 
-    const previewCanvas = document.getElementById('preview-canvas');
-    const prevPageButton = document.getElementById('prev-page');
-    const nextPageButton = document.getElementById('next-page');
-    const pageInfo = document.getElementById('page-info');
+    const prevPreviewButton = document.getElementById('prev-preview');
+    const nextPreviewButton = document.getElementById('next-preview');
+    const prevThumbnailButton = document.getElementById('prev-thumbnail');
+    const nextThumbnailButton = document.getElementById('next-thumbnail');
 
     let watermarkImg = null;
     let imagesData = [];
-    let currentPage = 1;
-    const imagesPerPage = 8; // Adjusted to match Bootstrap grid
-    let currentPreviewIndex = 0; // Index of the image currently in the live preview
-
-    // Debounce function
-    function debounce(func, delay) {
-        let timeoutId;
-        return function (...args) {
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => {
-                func.apply(this, args);
-            }, delay);
-        };
-    }
+    let currentPreviewIndex = 0;
+    const imagesPerPage = 6;
+    let thumbnailPageStartIndex = 0;
 
     // Load settings from localStorage
     loadSettings();
@@ -51,24 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updateLivePreview();
     }
 
-    // Debounced reprocess images function
-    const debouncedReprocessImages = debounce(() => {
-        reprocessImages();
-    }, 300);
-
     // Save settings when they change and reprocess images
     [watermarkText, positionSelect, fontSizeInput, opacityInput, marginXInput, marginYInput].forEach((input) => {
         input.addEventListener('input', () => {
-            saveSettings();
-            updateLivePreview();
+            saveSettingsAndUpdatePreview();
             reprocessImages();
         });
-    });
-
-    // Apply debouncing to the color picker input
-    colorInput.addEventListener('input', () => {
-        saveSettingsAndUpdatePreview();
-        debouncedReprocessImages();
     });
 
     // Handle watermark image upload with localStorage
@@ -99,10 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
     fileInput.addEventListener('change', () => handleFiles(fileInput.files));
 
     // Handle drag and drop
+    uploadArea.addEventListener('drop', handleDrop, false);
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach((eventName) => {
         uploadArea.addEventListener(eventName, preventDefaults, false);
     });
-    uploadArea.addEventListener('drop', handleDrop, false);
 
     function preventDefaults(e) {
         e.preventDefault();
@@ -115,80 +93,80 @@ document.addEventListener('DOMContentLoaded', () => {
         handleFiles(files);
     }
 
-    // Handle drag events for styling
-    ['dragenter', 'dragover'].forEach((eventName) => {
-        uploadArea.addEventListener(
-            eventName,
-            () => uploadArea.classList.add('over'),
-            false
-        );
-    });
-    ['dragleave', 'drop'].forEach((eventName) => {
-        uploadArea.addEventListener(
-            eventName,
-            () => uploadArea.classList.remove('over'),
-            false
-        );
-    });
-
     // Handle files
     function handleFiles(files) {
-        imagesData = []; // Reset images data
-        currentPage = 1;
-        imagePreview.innerHTML = '';
-        [...files].forEach((file, index) => {
+        [...files].forEach((file) => {
             if (file.type.match('image.*')) {
-                readImageFile(file, index);
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (e) => {
+                    imagesData.push({ originalDataURL: e.target.result, filename: file.name });
+                    if (imagesData.length === 1) currentPreviewIndex = 0;
+                    displayThumbnails();
+                    updateLivePreview();
+                };
             } else {
                 alert(`Unsupported file type: ${file.name}`);
             }
         });
     }
 
-    // Read image file and store original data
-    function readImageFile(file, index) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (e) => {
-            imagesData.push({ originalDataURL: e.target.result, filename: file.name });
-            if (imagesData.length === 1) {
-                // Update live preview with the first image
-                currentPreviewIndex = 0;
-                updateLivePreview();
-            }
-            displayImages();
-        };
-    }
-
-    // Reprocess images with current settings
-    function reprocessImages() {
+    // Update live preview
+    function updateLivePreview() {
         if (imagesData.length === 0) return;
-        imagesData.forEach((image, index) => {
-            const img = new Image();
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                canvas.width = img.width;
-                canvas.height = img.height;
-
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0);
-
-                // Apply watermark
-                applyWatermark(ctx, canvas.width, canvas.height);
-
-                const dataURL = canvas.toDataURL();
-                image.dataURL = dataURL; // Update watermarked dataURL
-
-                // If this image is currently in live preview, update it
-                if (index === currentPreviewIndex) {
-                    updateLivePreview();
-                }
-
-                displayImages();
-            };
-            img.src = image.originalDataURL;
-        });
+        const ctx = previewCanvas.getContext('2d');
+        const img = new Image();
+        img.onload = () => {
+            previewCanvas.width = img.width;
+            previewCanvas.height = img.height;
+            ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+            ctx.drawImage(img, 0, 0);
+            applyWatermark(ctx, previewCanvas.width, previewCanvas.height);
+        };
+        img.src = imagesData[currentPreviewIndex].originalDataURL;
     }
+
+    // Display thumbnails with dynamic pagination
+    function displayThumbnails() {
+        const thumbnails = imagesData.slice(thumbnailPageStartIndex, thumbnailPageStartIndex + imagesPerPage);
+        imagePreview.innerHTML = thumbnails.map((image, index) => {
+            return `<img src="${image.originalDataURL}" data-index="${thumbnailPageStartIndex + index}" class="thumbnail">`;
+        }).join('');
+
+        document.querySelectorAll('.thumbnail').forEach((img) => {
+            img.addEventListener('click', () => {
+                currentPreviewIndex = parseInt(img.dataset.index, 10);
+                updateLivePreview();
+            });
+        });
+
+        prevThumbnailButton.style.visibility = thumbnailPageStartIndex > 0 ? 'visible' : 'hidden';
+        nextThumbnailButton.style.visibility = thumbnailPageStartIndex + imagesPerPage < imagesData.length ? 'visible' : 'hidden';
+    }
+
+    // Thumbnail navigation
+    prevThumbnailButton.addEventListener('click', () => {
+        thumbnailPageStartIndex = Math.max(0, thumbnailPageStartIndex - imagesPerPage);
+        displayThumbnails();
+    });
+
+    nextThumbnailButton.addEventListener('click', () => {
+        if (thumbnailPageStartIndex + imagesPerPage < imagesData.length) {
+            thumbnailPageStartIndex += imagesPerPage;
+            displayThumbnails();
+        }
+    });
+
+    // Preview navigation
+    prevPreviewButton.addEventListener('click', () => {
+        currentPreviewIndex = (currentPreviewIndex > 0) ? currentPreviewIndex - 1 : imagesData.length - 1;
+        updateLivePreview();
+    });
+
+    nextPreviewButton.addEventListener('click', () => {
+        currentPreviewIndex = (currentPreviewIndex + 1) % imagesData.length;
+        updateLivePreview();
+    });
 
     // Apply watermark to canvas context
     function applyWatermark(ctx, canvasWidth, canvasHeight) {
@@ -227,8 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             const text = watermarkText.value;
             if (text) {
-                const textMetrics = ctx.measureText(text);
-                const textWidth = textMetrics.width;
+                const textWidth = ctx.measureText(text).width;
                 const textHeight = fontSize;
                 ({ x, y } = calculatePosition(canvasWidth, canvasHeight, textWidth, textHeight, marginX, marginY));
                 ctx.fillText(text, x, y);
@@ -271,95 +248,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return { x, y };
     }
 
-    // Display images with pagination and add click event to thumbnails
-    function displayImages() {
-        const totalPages = Math.ceil(imagesData.length / imagesPerPage) || 1;
-        if (currentPage > totalPages) currentPage = totalPages;
-        if (currentPage < 1) currentPage = 1;
-
-        // Clear the image preview area
-        imagePreview.innerHTML = '';
-
-        // If there are no images, update pagination info and disable buttons
-        if (imagesData.length === 0) {
-            pageInfo.textContent = `Page 1 of 1`;
-            prevPageButton.disabled = true;
-            nextPageButton.disabled = true;
-            return;
-        }
-
-        // Calculate the images to show on the current page
-        const start = (currentPage - 1) * imagesPerPage;
-        const end = start + imagesPerPage;
-        const imagesToShow = imagesData.slice(start, end);
-
-        imagesToShow.forEach((image, index) => {
-            const colDiv = document.createElement('div');
-            colDiv.className = 'col-md-3';
-
-            const container = document.createElement('div');
-            container.className = 'image-container';
-
-            const img = document.createElement('img');
-            img.src = image.dataURL || image.originalDataURL;
-            img.dataset.index = start + index; // Store the index of the image
-            img.addEventListener('click', () => {
-                currentPreviewIndex = parseInt(img.dataset.index, 10);
-                updateLivePreview();
-            });
-
-            const link = document.createElement('a');
-            link.href = image.dataURL || image.originalDataURL;
-            link.download = renameFile(image.filename);
-            link.textContent = 'Download';
-            link.className = 'download-link';
-
-            container.appendChild(img);
-            container.appendChild(link);
-            colDiv.appendChild(container);
-            imagePreview.appendChild(colDiv);
-        });
-
-        pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
-
-        // Disable buttons if on first or last page
-        prevPageButton.disabled = currentPage <= 1;
-        nextPageButton.disabled = currentPage >= totalPages;
-    }
-
-    // Pagination controls
-    prevPageButton.addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--;
-            displayImages();
-        }
-    });
-
-    nextPageButton.addEventListener('click', () => {
-        const totalPages = Math.ceil(imagesData.length / imagesPerPage);
-        if (currentPage < totalPages) {
-            currentPage++;
-            displayImages();
-        }
-    });
-
-    // Rename file
-    function renameFile(filename) {
-        const dotIndex = filename.lastIndexOf('.');
-        const name = filename.substring(0, dotIndex);
-        const extension = filename.substring(dotIndex);
-        return `${name}_marked${extension}`;
-    }
-
-    // Download all as ZIP
+    // Download all images as a ZIP
     downloadZipButton.addEventListener('click', () => {
         const zip = new JSZip();
         if (imagesData.length === 0) {
             alert('No images to download.');
             return;
         }
-        let processedCount = 0;
-        imagesData.forEach((image) => {
+        imagesData.forEach((image, index) => {
             const img = new Image();
             img.onload = () => {
                 const canvas = document.createElement('canvas');
@@ -375,8 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 canvas.toBlob((blob) => {
                     const newFilename = renameFile(image.filename);
                     zip.file(newFilename, blob);
-                    processedCount++;
-                    if (processedCount === imagesData.length) {
+                    if (index === imagesData.length - 1) {
                         zip.generateAsync({ type: 'blob' }).then((content) => {
                             saveAs(content, 'watermarked_images.zip');
                         });
@@ -387,29 +282,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Update live preview
-    function updateLivePreview() {
-        const ctx = previewCanvas.getContext('2d');
-        const sampleImage = new Image();
-        sampleImage.onload = () => {
-            previewCanvas.width = sampleImage.width;
-            previewCanvas.height = sampleImage.height;
-            ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-            ctx.drawImage(sampleImage, 0, 0);
-            applyWatermark(ctx, previewCanvas.width, previewCanvas.height);
-        };
-
-        if (imagesData.length > 0) {
-            sampleImage.src = imagesData[currentPreviewIndex].originalDataURL;
-        } else {
-            sampleImage.src = 'static/img/preview.png';
-        }
+    // Rename file
+    function renameFile(filename) {
+        const dotIndex = filename.lastIndexOf('.');
+        const name = filename.substring(0, dotIndex);
+        const extension = filename.substring(dotIndex);
+        return `${name}_marked${extension}`;
     }
 
-    // Download the image when live preview is clicked
+    // Download individual preview image when canvas is clicked
     previewCanvas.addEventListener('click', () => {
         if (imagesData.length === 0) return;
-
         const img = new Image();
         img.onload = () => {
             const canvas = document.createElement('canvas');
@@ -427,9 +310,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         img.src = imagesData[currentPreviewIndex].originalDataURL;
     });
-
-    // Initialize live preview
-    updateLivePreview();
 
     // Save settings to localStorage
     function saveSettings() {
@@ -468,11 +348,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const savedWatermarkImage = localStorage.getItem('watermarkImage');
         if (savedWatermarkImage) {
             watermarkImg = new Image();
-            watermarkImg.onload = () => updateLivePreview();
+            watermarkImg.onload = updateLivePreview;
             watermarkImg.src = savedWatermarkImage;
         }
 
         updateLivePreview();
-        displayImages();
+        displayThumbnails();
     }
 });
