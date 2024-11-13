@@ -84,6 +84,23 @@ document.addEventListener('DOMContentLoaded', () => {
     selectButton.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', () => handleFiles(fileInput.files));
 
+    // Handle drag and drop events for file uploads
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, preventDefaults, false);
+    });
+    uploadArea.addEventListener('drop', handleDrop, false);
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFiles(files);
+    }
+
     function handleFiles(files) {
         imagesData = [];
         imagePreview.innerHTML = '';
@@ -210,6 +227,35 @@ document.addEventListener('DOMContentLoaded', () => {
         return { x, y };
     }
 
+    // Download all images as ZIP
+    downloadZipButton.addEventListener('click', () => {
+        if (imagesData.length === 0) return alert('No images to download.');
+
+        const zip = new JSZip();
+        imagesData.forEach((image) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                applyWatermark(ctx, canvas.width, canvas.height);
+
+                canvas.toBlob((blob) => {
+                    zip.file(renameFile(image.filename), blob);
+                    if (zip.files.length === imagesData.length) {
+                        zip.generateAsync({ type: 'blob' }).then((content) => {
+                            saveAs(content, 'watermarked_images.zip');
+                        });
+                    }
+                });
+            };
+            img.src = image.originalDataURL;
+        });
+    });
+
     // Update live preview
     function updateLivePreview() {
         const ctx = previewCanvas.getContext('2d');
@@ -227,6 +273,14 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             sampleImage.src = 'static/img/preview.png';
         }
+    }
+
+    // Rename file
+    function renameFile(filename) {
+        const dotIndex = filename.lastIndexOf('.');
+        const name = filename.substring(0, dotIndex);
+        const extension = filename.substring(dotIndex);
+        return `${name}_marked${extension}`;
     }
 
     // Save settings to localStorage
