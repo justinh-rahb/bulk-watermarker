@@ -24,7 +24,7 @@ body {
 .aspect-4-3 {
     position: relative;
     width: 100%;
-    padding-top: 75%; /* 4:3 Aspect Ratio */
+    height: auto; /* Allows height to adapt to the image */
 }
 .aspect-4-3 canvas {
     position: absolute;
@@ -65,13 +65,14 @@ body {
     display: flex;
     align-items: center;
     overflow-x: auto;
-    height: 100px; /* Consistent height */
+    height: 100px; /* Consistent height for thumbnails */
+    padding: 0.5rem;
 }
 #image-preview img {
     margin-right: 8px;
     object-fit: cover;
     width: auto;
-    height: 80px;
+    height: 80px; /* Fixed thumbnail height */
     border-radius: 0.25rem;
     cursor: pointer;
     transition: transform 0.3s, box-shadow 0.3s;
