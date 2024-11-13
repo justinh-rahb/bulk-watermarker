@@ -1,114 +1,28 @@
-/* Custom Styles */
-
 body {
-    background-color: #f8f9fa;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
-
-.navbar-brand i {
-    margin-right: 8px;
-}
-
-#upload-area {
-    cursor: pointer;
-    background-color: #e9ecef;
-}
-
-#upload-area.over {
-    background-color: #dee2e6;
-}
-
-#preview-canvas {
-    max-width: 100%;
-    cursor: pointer;
-}
-
-.image-container {
+/* Set preview canvas to a 4:3 ratio by default */
+.aspect-4-3 {
     position: relative;
-    overflow: hidden;
-}
-
-.image-container img {
     width: 100%;
-    height: auto;
-    cursor: pointer;
+    padding-top: 75%; /* 4:3 Aspect Ratio */
 }
-
-.image-container .download-link {
+.aspect-4-3 canvas {
     position: absolute;
-    bottom: 5px;
-    left: 5px;
-    background: rgba(255, 255, 255, 0.7);
-    padding: 5px 10px;
-    text-decoration: none;
-    color: #000;
-    font-size: 14px;
-    border-radius: 5px;
-}
-
-#opacity-value {
-    font-size: 14px;
-}
-
-.page-item.disabled .page-link {
-    color: #6c757d;
-    pointer-events: none;
-}
-/* Custom Styles */
-
-body {
-    background-color: #f8f9fa;
-}
-
-.navbar-brand i {
-    margin-right: 8px;
-}
-
-.navbar .nav-link {
-    color: #fff;
-}
-
-#upload-area {
-    cursor: pointer;
-    background-color: #e9ecef;
-}
-
-#upload-area.over {
-    background-color: #dee2e6;
-}
-
-#preview-canvas {
-    max-width: 100%;
-    cursor: pointer;
-}
-
-.image-container {
-    position: relative;
-    overflow: hidden;
-}
-
-.image-container img {
+    top: 0;
+    left: 0;
     width: 100%;
-    height: auto;
-    cursor: pointer;
+    height: 100%;
 }
-
-.image-container .download-link {
-    position: absolute;
-    bottom: 5px;
-    left: 5px;
-    background: rgba(255, 255, 255, 0.7);
-    padding: 5px 10px;
-    text-decoration: none;
-    color: #000;
-    font-size: 14px;
-    border-radius: 5px;
+/* Adjust height dynamically based on viewport */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
-
-#opacity-value {
-    font-size: 14px;
-}
-
-.page-item.disabled .page-link {
-    color: #6c757d;
-    pointer-events: none;
+.preview-container {
+    flex: 1;
 }
