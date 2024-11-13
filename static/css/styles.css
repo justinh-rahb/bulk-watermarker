@@ -1,10 +1,26 @@
+/* Body and font styles */
 body {
     font-family: 'Inter', sans-serif;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: #f8f9fa;
 }
-/* Set preview canvas to a 4:3 ratio by default */
+
+/* Main content area setup */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    max-width: 100%;
+}
+
+/* Preview container styling */
+.preview-container {
+    flex: 1;
+}
+
+/* Default aspect ratio for the preview canvas */
 .aspect-4-3 {
     position: relative;
     width: 100%;
@@ -17,12 +33,127 @@ body {
     width: 100%;
     height: 100%;
 }
-/* Adjust height dynamically based on viewport */
-.main-content {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+
+/* File upload button styling */
+#select-button {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
-.preview-container {
-    flex: 1;
+#select-button:hover {
+    background-color: #0056b3;
+}
+
+/* Filmstrip styling for processed images */
+#filmstrip {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow-x: auto;
+    height: 100px; /* Fixed height for filmstrip */
+    padding: 0.5rem;
+}
+#filmstrip button {
+    flex-shrink: 0;
+}
+
+/* Thumbnail images in filmstrip */
+#image-preview img {
+    object-fit: cover;
+    width: auto;
+    height: 80px;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+#image-preview img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Navigation button styling for filmstrip */
+#prev-page, #next-page {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: #e2e8f0;
+    color: #4a5568;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+#prev-page:hover, #next-page:hover {
+    background-color: #cbd5e0;
+    transform: scale(1.1);
+}
+#prev-page:disabled, #next-page:disabled {
+    cursor: default;
+    opacity: 0.5;
+}
+
+/* Processed Images Container */
+.processed-images-container {
+    height: 128px; /* Fixed height to prevent resizing */
+    overflow: hidden;
+}
+
+/* Watermark settings panel styling */
+.bg-white {
+    background-color: #ffffff;
+}
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+.shadow-sm {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.p-4 {
+    padding: 1rem;
+}
+
+/* Input styling for watermark settings */
+input, select {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #d1d5db;
+    transition: border-color 0.3s;
+}
+input:focus, select:focus {
+    border-color: #2563eb;
+    outline: none;
+}
+
+/* Color and opacity slider adjustments */
+input[type="color"] {
+    height: 2.5rem;
+    width: 100%;
+    border: none;
+}
+input[type="range"] {
+    width: 100%;
+}
+
+/* Disabled state for pagination arrows */
+#prev-page.disabled, #next-page.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Thumbnail hover effect in filmstrip */
+.image-container img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.image-container img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
