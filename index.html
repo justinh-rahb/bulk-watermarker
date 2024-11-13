@@ -48,15 +48,17 @@
             <!-- Main Content: Preview and Watermark Settings -->
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 flex-1">
                 <!-- Live Preview Section -->
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center gap-2">
+                <div class="lg:col-span-3 bg-white rounded-lg shadow-sm p-4 preview-container">
+                    <div class="flex items-center gap-2 mb-4">
                         <i class="fas fa-eye text-gray-600"></i>
                         <h2 class="text-lg font-semibold">Live Preview</h2>
                     </div>
-                    <button id="select-button" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Select Images</button>
-                </div>
-                <div id="upload-area" class="aspect-4-3 bg-gray-100 rounded-lg overflow-hidden cursor-pointer relative">
-                    <canvas id="preview-canvas" class="absolute inset-0 w-full h-full"></canvas>
+                    <div id="upload-area" class="aspect-4-3 bg-gray-100 rounded-lg overflow-hidden cursor-pointer relative">
+                        <canvas id="preview-canvas" class="absolute inset-0 w-full h-full"></canvas>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
+                            <p>Drop images here or click to upload</p>
+                            <button id="select-button" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">Select Images</button>
+                        </div>
                         <input type="file" id="file-input" multiple accept="image/png, image/jpeg" class="hidden">
                     </div>
                 </div>
