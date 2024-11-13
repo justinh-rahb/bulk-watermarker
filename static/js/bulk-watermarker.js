@@ -111,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert(`Unsupported file type: ${file.name}`);
             }
         });
+        displayThumbnails(); // Update thumbnails after reprocessing
     }
 
     function readImageFile(file) {
@@ -150,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             img.src = image.originalDataURL;
         });
+        displayThumbnails(); // Update thumbnails after reprocessing
     }
 
     // Apply watermark to canvas context
@@ -261,18 +263,38 @@ document.addEventListener('DOMContentLoaded', () => {
         const ctx = previewCanvas.getContext('2d');
         const sampleImage = new Image();
         sampleImage.onload = () => {
+            // Set canvas dimensions to match the image's aspect ratio
             previewCanvas.width = sampleImage.width;
             previewCanvas.height = sampleImage.height;
+            
+            // Clear the canvas and draw the uploaded image
             ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
             ctx.drawImage(sampleImage, 0, 0);
+    
+            // Apply watermark
             applyWatermark(ctx, previewCanvas.width, previewCanvas.height);
         };
-
+    
+        // Use the current image if available, else use a default placeholder
         if (imagesData.length > 0) {
             sampleImage.src = imagesData[currentPreviewIndex].originalDataURL;
         } else {
-            sampleImage.src = 'static/img/preview.png';
+            sampleImage.src = 'static/img/preview.png'; // Placeholder image
         }
+    }
+
+    function displayThumbnails() {
+        imagePreview.innerHTML = ''; // Clear existing thumbnails
+        imagesData.forEach((image, index) => {
+            const img = document.createElement('img');
+            img.src = image.dataURL || image.originalDataURL;
+            img.className = 'thumbnail'; // Use this class for styling
+            img.addEventListener('click', () => {
+                currentPreviewIndex = index;
+                updateLivePreview();
+            });
+            imagePreview.appendChild(img);
+        });
     }
 
     // Rename file

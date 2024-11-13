@@ -61,7 +61,14 @@ body {
 }
 
 /* Thumbnail images in filmstrip */
+#image-preview {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    height: 100px; /* Consistent height */
+}
 #image-preview img {
+    margin-right: 8px;
     object-fit: cover;
     width: auto;
     height: 80px;
